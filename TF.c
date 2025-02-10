@@ -21,9 +21,16 @@
 #define INPUT_DIR "./images/"
 #define OUTPUT_DIR "./images_modificadas/"
 
-int main(){
+int main(int argc, char *argv[]){
+
+    if(argc!=2){
+        printf("\nUse\t %s <numerodeKs>\n\n",*(argv));
+        exit(1);
+    }
+
+
     struct pgm img;
-    int k = 3;
+    int k = atoi(*(argv+1));
 
 	clock_t begin, end;
 	double time_total=0;
@@ -54,12 +61,14 @@ int main(){
         	snprintf(filepath, sizeof(filepath), "./images/%s", dir->d_name);
 
 			printf("Processando: %s\n", filepath);
+
+            unsigned char centroides[k];
 			
 			readPGMImage(&img,filepath);
 
             viewPGMImage(&img);
 
-            kmeans(&img);
+            kmeans(&img, k, centroides);
 
 			writePGMImage(&img,dir->d_name);
 				

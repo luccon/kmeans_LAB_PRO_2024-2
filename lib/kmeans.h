@@ -12,5 +12,5 @@
 
 
 unsigned char distancia(unsigned char p1, unsigned char p2);
-void kmeans(struct pgm *pio);
+void kmeans(struct pgm *pio,int k, unsigned char *centroides);
 void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k);
