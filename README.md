@@ -4,4 +4,4 @@ no terminal:
 
 make
 
-./programa
+./programa <numerodeKs>
