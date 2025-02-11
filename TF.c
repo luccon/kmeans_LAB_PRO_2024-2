@@ -28,8 +28,8 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-
     struct pgm img;
+    
     int k = atoi(*(argv+1));
 
 	clock_t begin, end;

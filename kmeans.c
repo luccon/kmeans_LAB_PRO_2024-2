@@ -1,3 +1,11 @@
+/**********************************************************************/
+/*Aluno: Lucas dos Santos Barboza                                     */
+/*Matricula: 20192045050420                                           */
+/*Avaliação 04: Trabalho Final                                        */
+/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                          */
+/*Compilador:GCC                                                      */
+/**********************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -11,6 +19,7 @@ struct pgm {
     int mv;
     unsigned char *pData;
 };
+
 struct IntensidadeFrequencia {
     unsigned char intensidade;
     int frequencia;
@@ -36,7 +45,7 @@ void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
         vf[vx[i]].frequencia++;
     }
     
-    // Ordenar as intensidades por frequência
+    // Ordenar as intensidades por frequência (Bubble Sort)
     for (int i = 0; i < 255; i++) {
         for (int j = 0; j < 255 - i; j++) {
             if (vf[j].frequencia < vf[j + 1].frequencia) {
@@ -62,7 +71,7 @@ unsigned char distancia(unsigned char p1, unsigned char p2) {
     return abs(p1 - p2);
 }
 
-// Função para imprimir os centroides
+// Função para imprimir os centroides para depuração
 void printCentroides(unsigned char *centroides, int k) {
     printf("Centroides atuais: ");
     for (int i = 0; i < k; i++) {
@@ -118,7 +127,7 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
             }
         }
 
-        printCentroides(centroides, k); // Depuração
+        printCentroides(centroides, k); // Checar os centroides
     }
 
     // Atualizar a imagem com os novos valores dos clusters

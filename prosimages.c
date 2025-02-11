@@ -7,8 +7,10 @@
 /**********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define INPUT_DIR "./images/"
 #define OUTPUT_DIR "./images_modificadas/"
+
 struct pgm{
 	int tipo;
 	int c;
