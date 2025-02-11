@@ -9,4 +9,4 @@ no terminal:
 
 make
 
-./programa <numerodeKs>
+./programa "numerodeKs"
