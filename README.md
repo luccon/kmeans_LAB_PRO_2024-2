@@ -10,3 +10,5 @@ no terminal:
 make
 
 ./programa "numerodeKs"
+
+Video explicando o codigo: https://youtu.be/U2RFTsZEj8M
