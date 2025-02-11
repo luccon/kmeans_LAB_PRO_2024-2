@@ -41,15 +41,15 @@ void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
         for (int j = 0; j < 255 - i; j++) {
             if (vf[j].frequencia < vf[j + 1].frequencia) {
                 struct IntensidadeFrequencia temp = vf[j];
-                vf[j] = vf[j + 1];
-                vf[j + 1] = temp;
+                *(vf + j) = *(vf + j + 1);
+                *(vf + j + 1) = temp;
             }
         }
     }
     
     // Selecionar os k valores mais frequentes como centroides
     for (int i = 0; i < k; i++) {
-        centroides[i] = vf[i].intensidade;
+        *(centroides+i) = vf[i].intensidade;
     }
     
     free(vx);
@@ -66,7 +66,7 @@ unsigned char distancia(unsigned char p1, unsigned char p2) {
 void printCentroides(unsigned char *centroides, int k) {
     printf("Centroides atuais: ");
     for (int i = 0; i < k; i++) {
-        printf("%d ", centroides[i]);
+        printf("%d ", *(centroides+i));
     }
     printf("\n");
 }
@@ -84,27 +84,27 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
         for (int i = 0; i < n_pixels; i++) {
             unsigned char pixel = img->pData[i];
             int melhor_cluster = 0;
-            int menor_distancia = abs(pixel - centroides[0]);
+            int menor_distancia = abs(pixel - *centroides);
 
             for (int j = 1; j < k; j++) {
-                int dist = abs(pixel - centroides[j]);
+                int dist = abs(pixel - *(centroides+j));
                 if (dist < menor_distancia) {
                     menor_distancia = dist;
                     melhor_cluster = j;
                 }
             }
-            labels[i] = melhor_cluster;
+            *(labels+i) = melhor_cluster;
         }
 
         // Reinicializar somas e contadores
         for (int i = 0; i < k; i++) {
-            soma_centroides[i] = 0;
-            cluster_sizes[i] = 0;
+            *(soma_centroides+i) = 0;
+            *(cluster_sizes+i) = 0;
         }
 
         // Somar valores dos pixels para cada cluster
         for (int i = 0; i < n_pixels; i++) {
-            int cluster = labels[i];
+            int cluster = *(labels+i);
             soma_centroides[cluster] += img->pData[i];
             cluster_sizes[cluster]++;
         }
@@ -112,9 +112,9 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
         // Atualizar os centroides
         for (int i = 0; i < k; i++) {
             if (cluster_sizes[i] > 0) {
-                centroides[i] = soma_centroides[i] / cluster_sizes[i];  // Média dos pixels
+                *(centroides+i) = *(soma_centroides+i) / *(cluster_sizes+i);  // Média dos pixels
             } else {
-                centroides[i] = rand() % 256; // Evitar centroides mortos
+                *(centroides+i) = rand() % 256; // Evitar centroides mortos
             }
         }
 
@@ -123,7 +123,7 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
 
     // Atualizar a imagem com os novos valores dos clusters
     for (int i = 0; i < n_pixels; i++) {
-        int cluster = labels[i];
+        int cluster = *(labels+i);
         img->pData[i] = centroides[cluster];
     }
 
