@@ -36,7 +36,7 @@ void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
         vf[vx[i]].frequencia++;
     }
     
-    // Ordenar as intensidades por frequência (Bubble Sort)
+    // Ordenar as intensidades por frequência
     for (int i = 0; i < 255; i++) {
         for (int j = 0; j < 255 - i; j++) {
             if (vf[j].frequencia < vf[j + 1].frequencia) {
