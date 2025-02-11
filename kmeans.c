@@ -62,7 +62,7 @@ unsigned char distancia(unsigned char p1, unsigned char p2) {
     return abs(p1 - p2);
 }
 
-// Função para imprimir os centroides para depuração
+// Função para imprimir os centroides
 void printCentroides(unsigned char *centroides, int k) {
     printf("Centroides atuais: ");
     for (int i = 0; i < k; i++) {
@@ -80,7 +80,7 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
 
     int max_iteracoes = 10; 
     for (int iter = 0; iter < max_iteracoes; iter++) {
-        // Etapa 1: Atribuir cada pixel ao centróide mais próximo
+        // Atribuir cada pixel ao centróide mais próximo
         for (int i = 0; i < n_pixels; i++) {
             unsigned char pixel = img->pData[i];
             int melhor_cluster = 0;
