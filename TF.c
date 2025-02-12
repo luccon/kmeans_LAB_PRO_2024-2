@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 
 			printf("Processando: %s\n", filepath);
 
-            unsigned char centroides[k];
+            unsigned char centroides[k] = {0};
 			
 			readPGMImage(&img,filepath);
 
