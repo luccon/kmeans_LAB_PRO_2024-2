@@ -1,10 +1,11 @@
-/**********************************************************************/
-/*Aluno: Lucas dos Santos Barboza                                     */
-/*Matricula: 20192045050420                                           */
-/*Avaliação 04: Trabalho Final                                        */
-/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                          */
-/*Compilador:GCC                                                      */
-/**********************************************************************/
+/*************************************************************************/
+/*Alunos:Lucas dos Santos Barboza, Thales Lucas Lima e Gomes, Felipe     */
+/*Matheus Vasconcelos Oliveira e Francisco Cassimiro de Sousa Albuquerque*/
+/*Matricula: 20192045050420                                              */
+/*Avaliação 04: Trabalho Final                                           */
+/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                             */
+/*Compilador:GCC                                                         */
+/*************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

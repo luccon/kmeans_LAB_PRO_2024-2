@@ -1,17 +1,17 @@
-/**********************************************************************/
-/*Aluno: Lucas dos Santos Barboza                                     */
-/*Matricula: 20192045050420                                           */
-/*Avaliação 04: Trabalho Final                                        */
-/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                          */
-/*Compilador:GCC                                                      */
-/**********************************************************************/
+/*************************************************************************/
+/*Alunos:Lucas dos Santos Barboza, Thales Lucas Lima e Gomes, Felipe     */
+/*Matheus Vasconcelos Oliveira e Francisco Cassimiro de Sousa Albuquerque*/
+/*Matricula: 20192045050420                                              */
+/*Avaliação 04: Trabalho Final                                           */
+/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                             */
+/*Compilador:GCC                                                         */
+/*************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 
-// Estrutura para representar uma imagem PGM
 struct pgm {
     int tipo;
     int c;
@@ -19,12 +19,12 @@ struct pgm {
     int mv;
     unsigned char *pData;
 };
-
+// Struct para armazenar a frequencia das intensidades dos bits das imagens
 struct IntensidadeFrequencia {
     unsigned char intensidade;
     int frequencia;
 };
-
+// Função para definir os primeiros valores dos Clusters
 void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
     unsigned char *vx = (unsigned char*) malloc(pio->r * pio->c * sizeof(unsigned char));
     struct IntensidadeFrequencia *vf = (struct IntensidadeFrequencia*) malloc(256 * sizeof(struct IntensidadeFrequencia));
@@ -45,7 +45,7 @@ void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
         vf[vx[i]].frequencia++;
     }
     
-    // Ordenar as intensidades por frequência (Bubble Sort)
+    // Ordenar as intensidades por frequência
     for (int i = 0; i < 255; i++) {
         for (int j = 0; j < 255 - i; j++) {
             if (vf[j].frequencia < vf[j + 1].frequencia) {
@@ -70,8 +70,7 @@ void inicializarCentroides(struct pgm *pio, unsigned char *centroides, int k) {
 unsigned char distancia(unsigned char p1, unsigned char p2) {
     return abs(p1 - p2);
 }
-
-// Função para imprimir os centroides para depuração
+// Função para ver as mudanças dos centroides
 void printCentroides(unsigned char *centroides, int k) {
     printf("Centroides atuais: ");
     for (int i = 0; i < k; i++) {
@@ -80,12 +79,15 @@ void printCentroides(unsigned char *centroides, int k) {
     printf("\n");
 }
 
+
 // Função para realizar o algoritmo K-means
 void kmeans(struct pgm *img, int k, unsigned char *centroides) {
     int n_pixels = img->r * img->c;
-    int *labels = (int *) malloc(n_pixels * sizeof(int));
+    int *i_clusters = (int *) malloc(n_pixels * sizeof(int));
     int *soma_centroides = (int *) malloc(k * sizeof(int)); 
-    int *cluster_sizes = (int *) malloc(k * sizeof(int));
+    int *tamanho_clusters = (int *) malloc(k * sizeof(int));
+
+    inicializarCentroides(img,centroides,k);
 
     int max_iteracoes = 10; 
     for (int iter = 0; iter < max_iteracoes; iter++) {
@@ -102,26 +104,26 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
                     melhor_cluster = j;
                 }
             }
-            *(labels+i) = melhor_cluster;
+            *(i_clusters+i) = melhor_cluster;
         }
 
         // Reinicializar somas e contadores
         for (int i = 0; i < k; i++) {
             *(soma_centroides+i) = 0;
-            *(cluster_sizes+i) = 0;
+            *(tamanho_clusters+i) = 0;
         }
 
         // Somar valores dos pixels para cada cluster
         for (int i = 0; i < n_pixels; i++) {
-            int cluster = *(labels+i);
+            int cluster = *(i_clusters+i);
             soma_centroides[cluster] += img->pData[i];
-            cluster_sizes[cluster]++;
+            tamanho_clusters[cluster]++;
         }
 
         // Atualizar os centroides
         for (int i = 0; i < k; i++) {
-            if (cluster_sizes[i] > 0) {
-                *(centroides+i) = *(soma_centroides+i) / *(cluster_sizes+i);  // Média dos pixels
+            if (*(tamanho_clusters+i) > 0) {
+                *(centroides+i) = *(soma_centroides+i) / *(tamanho_clusters+i);  // Média dos pixels
             } else {
                 *(centroides+i) = rand() % 256; // Evitar centroides mortos
             }
@@ -132,11 +134,11 @@ void kmeans(struct pgm *img, int k, unsigned char *centroides) {
 
     // Atualizar a imagem com os novos valores dos clusters
     for (int i = 0; i < n_pixels; i++) {
-        int cluster = *(labels+i);
+        int cluster = *(i_clusters+i);
         img->pData[i] = centroides[cluster];
     }
 
-    free(labels);
+    free(i_clusters);
     free(soma_centroides);
-    free(cluster_sizes);
+    free(tamanho_clusters);
 }

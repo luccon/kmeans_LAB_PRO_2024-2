@@ -1,10 +1,11 @@
-/**********************************************************************/
-/*Aluno: Lucas dos Santos Barboza                                     */
-/*Matricula: 20192045050420                                           */
-/*Avaliação 04: Trabalho Final                                        */
-/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                          */
-/*Compilador:GCC                                                      */
-/**********************************************************************/
+/*************************************************************************/
+/*Alunos:Lucas dos Santos Barboza, Thales Lucas Lima e Gomes, Felipe     */
+/*Matheus Vasconcelos Oliveira e Francisco Cassimiro de Sousa Albuquerque*/
+/*Matricula: 20192045050420                                              */
+/*Avaliação 04: Trabalho Final                                           */
+/*04.505.23 - 2024.2 - Prof. Daniel Ferreira                             */
+/*Compilador:GCC                                                         */
+/*************************************************************************/
 
 #include <dirent.h>
 #include <stdio.h>
@@ -54,7 +55,7 @@ int main(int argc, char *argv[]){
 		
         while ((dir = readdir(d)) != NULL){
             if (strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0) {
-				continue;  // Pula arquivos especiais "." e ".."
+				continue;  // Pula os . dos diretorios "." e ".."
 			}
             
             char filepath[MAX_FILENAME];
