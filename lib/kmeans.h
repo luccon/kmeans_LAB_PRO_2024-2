@@ -5,10 +5,6 @@
 /*04.505.23 - 2024.2 - Prof. Daniel Ferreira                          */
 /*Compilador:GCC                                                      */
 /**********************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
 
 
 unsigned char distancia(unsigned char p1, unsigned char p2);
